@@ -15,11 +15,16 @@ Infilstucture
 
 
   Goals:
-    Front End Development
-      TextWebsite
-        HTML
-        CSS
-        Java Script
+    Get HTML code working effiently
+    
+    TextWebsite
+      Front End Development
+          HTML
+          CSS
+          Java Script
+      Back End
+        node js
+
 
     Free code camp (seperatally)
     URL:
