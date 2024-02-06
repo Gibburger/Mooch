@@ -12,4 +12,17 @@ Infilstucture
   Appachy cafca
   RedIS
   Post Ggresquel
+
+
+  Goals:
+    Front End Development
+      TextWebsite
+        HTML
+        CSS
+        Java Script
+
+    Free code camp (seperatally)
+    URL:
+    
+
   
