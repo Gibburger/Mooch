@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Chat</title>
+    <style>
+        #chat-box {
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="chat-box"></div>
+<input type="text" id="message-input" placeholder="Type your message">
+<button onclick="sendMessage()">Send</button>
+
+<script>
+    function sendMessage() {
+        // Get the input value
+        var message = document.getElementById("message-input").value;
+
+        // Create a new paragraph element
+        var newMessage = document.createElement("p");
+
+        // Set the text content of the paragraph to the user's message
+        newMessage.textContent = "User: " + message;
+
+        // Append the new paragraph to the chat box
+        document.getElementById("chat-box").appendChild(newMessage);
+
+        // Clear the input field
+        document.getElementById("message-input").value = "";
+    }
+</script>
+
+</body>
+</html>
