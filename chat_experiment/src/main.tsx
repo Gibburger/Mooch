@@ -1,6 +1,6 @@
 
 import {StrictMode} from 'react'
-import ReactDOM from 'react-dom/client'
+import ReactDOM from 'react-dom'
 import App from './App.tsx'
 import './index.css'
 import { ConvexProvider, ConvexReactClient } from 'convex/react';
