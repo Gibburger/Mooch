@@ -10,8 +10,8 @@ const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL);
 ReactDOM.render(
   <StrictMode>
     <ConvexProvider client={convex}>
-    <App />
+      <App />
     </ConvexProvider>
   </StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
