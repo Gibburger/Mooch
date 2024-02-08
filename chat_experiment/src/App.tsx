@@ -1,35 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useQuery, useMutation } from 'convex/react';
+import { api } from "../convex/_generated/api";
+import { useEffect, useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const NAME = "Kyle Herburgie";
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+export default function App(){
+  const messages = useQuery(api.messages.list);
+  const sendMessage = useMutation(api.messages.send);
+
+  const [newMessageText, setNewMessageText] = useState("");
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }, 0);
+  }, [messages]);
+
+  return(
+    <main className="chat">
+      <header>
+        <h1>Convex Chat</h1>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          Connected as <strong>{NAME}</strong>
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+      </header>
+      {messages?.map((message) => (
+        <article
+        key={message._id}
+        className={message.author === NAME ? "message-mine" : ""}
+        >
+          <div>{message.author}</div>
+
+          <p>{message.body}</p>
+        </article>
+      ))}
+
+      <form 
+      onSubmit={async (e) => {
+        e.preventDefault();
+        await sendMessage({ body: newMessageText, author: NAME});
+        setNewMessageText("");
+      }}
+      >
+        <input
+        value={newMessageText}
+        onChange={async (e) => {
+          const text = e.target.value;
+          setNewMessageText(text);
+        }}
+        placeholder="Write a message..."
+        />
+        <button type="submit" disabled={!newMessageText}>
+          Send
+        </button>
+      </form>
+
+
+
+
+
+
+
+    </main>
   )
 }
 
-export default App
