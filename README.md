@@ -34,3 +34,6 @@ Infilstucture
 
     Web Development Free Code Camp (HTML and CSS)
     https://www.freecodecamp.org/learn/2022/responsive-web-design
+
+    JavaScript 
+    https://scrimba.com/learn/learnjavascript
