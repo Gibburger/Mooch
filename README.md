@@ -37,3 +37,9 @@ Infilstucture
 
     JavaScript 
     https://scrimba.com/learn/learnjavascript
+
+    Roadmap for Mooch:
+    HTML 
+    CSS 
+    JavaScript 
+    Vue.js or Svelte or React.js 
