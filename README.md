@@ -41,5 +41,9 @@ Infilstucture
     Roadmap for Mooch:
     HTML 
     CSS 
-    JavaScript 
-    Vue.js or Svelte or React.js 
+    JavaScript or TypeScript
+    Vue.js or Svelte or React.js or Angular 
+
+    NEW IDEA 
+    Create a website with a waitinglist and see if there is a customerbase 
+    Include three.js
