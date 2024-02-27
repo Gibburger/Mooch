@@ -45,5 +45,5 @@ Infilstucture
     Vue.js or Svelte or React.js or Angular 
 
     NEW IDEA 
-    Create a website with a waitinglist and see if there is a customerbase 
+    Create a website with a waitlist and see if there is a customerbase 
     Include three.js
