@@ -3,3 +3,32 @@
     text-align: center;
 
 }
+
+h1, h2, h3, h4, p
+{
+    color: white;
+    text-shadow: 1px 1px aqua;
+    text-wrap: black;
+}
+
+.centerText
+{
+    text-align: center;
+}
+
+.background
+{
+    background-color: aqua;
+    background-image: url('sound-waves.gif');
+    background-size: cover; /* Adjust as needed (cover, contain, etc.) */
+    background-position: center center; /* Center the image */
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.textDetail
+{
+    
+}
