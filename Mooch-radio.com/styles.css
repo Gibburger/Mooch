@@ -7,8 +7,7 @@
 h1, h2, h3, h4, p
 {
     color: white;
-    text-shadow: 1px 1px aqua;
-    text-wrap: black;
+    text-shadow: 2px 2px black;
 }
 
 .centerText
@@ -19,7 +18,7 @@ h1, h2, h3, h4, p
 .background
 {
     background-color: aqua;
-    background-image: url('sound-waves.gif');
+    background-image: url('gfx/sound-waves.gif');
     background-size: cover; /* Adjust as needed (cover, contain, etc.) */
     background-position: center center; /* Center the image */
     background-repeat: no-repeat;
@@ -30,5 +29,5 @@ h1, h2, h3, h4, p
 
 .textDetail
 {
-    
+    /*font-family: "Lucida Console";*/
 }
