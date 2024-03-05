@@ -32,7 +32,6 @@ h1, h2, h3, h4, p{
 .background{
     background-color: black;
     background-image: url('gfx/sound-waves.gif');
-    
     background-size: cover; /* Adjust as needed (cover, contain, etc.) */
     background-position: center center; /* Center the image */
     background-repeat: no-repeat;
