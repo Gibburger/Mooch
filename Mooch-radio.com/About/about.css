@@ -31,3 +31,15 @@ body {
     padding: clamp(0.25rem, 0.5vw, 1rem) 0rem;
     transition: opacity 400ms ease;
 }
+
+#menu-background-pattern {
+    height: 100vh;
+    width: 100vw;
+
+    background-image: radial-gradient(
+        rgba(2255,255,0.1) 9%,
+        transparent 9%
+    );
+    background-position: 0% 0%;
+    background-size: 12vmin 12vmin;
+}
