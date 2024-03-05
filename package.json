@@ -1,0 +1,13 @@
+{
+  "name": "mooch",
+  "version": "1.0.0",
+  "description": "Front End   React Native   Java Script Back End:   Katlin   Spring boot Audio Streaming   C++   WebRTC Infilstucture   AWS   Appachy cafca   RedIS   Post Ggresquel",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
