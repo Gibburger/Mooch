@@ -110,6 +110,7 @@ function requestAuthorization()
         5.read playback state
         6.read recently played
         7.read private
+        8.reads top songs
     */  
     window.location.href = url; //show spotify's authorization screen
 }
