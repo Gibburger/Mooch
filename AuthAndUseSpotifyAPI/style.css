@@ -11,11 +11,11 @@ body{
 }
 
 #tokenSection{
-    display: none;
+    display: block;
 }
 
 #deviceSection{
-    display: none;
+    display: block;
 }
 
 .container{
