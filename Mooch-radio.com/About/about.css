@@ -37,7 +37,7 @@ body {
     width: 100vw;
 
     background-image: radial-gradient(
-        rgba(2255,255,0.1) 9%,
+        rgba(2255,255,255,0.1) 9%,
         transparent 9%
     );
     background-position: 0% 0%;
