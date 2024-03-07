@@ -4,6 +4,7 @@ var client_secret = "";
 
 const AUTHORIZE = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token";
+const GETTOPSONGS = "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=5"
 
 function onPageLoad() //determians if user has been rederected or not on startup
 {
@@ -32,6 +33,15 @@ function fetchAccessToken(code) //creates another url to spotify to get an acces
     body += "&redirect_uri=" + encodeURI(redirect_uri);
     body += "&client_id=" + client_id;
     body += "&client_secret=" + client_secret;
+    callAuthorizationApi(body);
+}
+
+function refreshAccessToken()
+{
+    refresh_token = localStorage.getItem("refresh_token");
+    let body = "grant_type=refresh_token";
+    body += "&refresh_token=" + refresh_token;
+    body += "&client_id=" + client_id;
     callAuthorizationApi(body);
 }
 
@@ -115,33 +125,38 @@ function requestAuthorization()
     window.location.href = url; //show spotify's authorization screen
 }
 
-// Authorization token that must have been created previously. See : https://developer.spotify.com/documentation/web-api/concepts/authorization
-async function fetchWebApi(endpoint, method, body) {
-  const token = access_token;
-  const res = await fetch(`https://api.spotify.com/${endpoint}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    method,
-    body:JSON.stringify(body)
-  });
-  return await res.json();
-}
-
-async function getTopTracks(){
-  // Endpoint reference : https://developer.spotify.com/documentation/web-api/reference/get-users-top-artists-and-tracks
-  return (await fetchWebApi(
-    'v1/me/top/tracks?time_range=long_term&limit=5', 'GET'
-  )).items;
-}
-
-async function CallTopTracks()
+function getTopSongs()
 {
-    const topTracks = await getTopTracks();
-    console.log(
-        topTracks?.map(
-            ({name, artists}) =>
-            `${name} by ${artists.map(artist => artist.name).join(', ')}`
-        )
-    );
+    callApi("GET", GETTOPSONGS, null, checkResponseCode())
+}
+
+function test()
+{
+    var data = JSON.parse(this.responseText);
+    console.log(data);
+}
+
+function callApi(method, url, body, callback)
+{
+    let xhr = new XMLHttpRequest();
+    xhr.open(method, url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+    xhr.send(body);
+    xhr.onload = callback;
+}
+
+function checkResponseCode()
+{
+    if ( this.status == 200 ){
+       // var data = JSON.parse(this.responseText);
+       // console.log(data);
+    }
+    else if ( this.status == 401 ){
+        refreshAccessToken();
+    }
+    else {
+        console.log(this.responseText);
+        alert(this.responseText);
+    }
 }
