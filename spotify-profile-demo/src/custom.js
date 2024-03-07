@@ -1,19 +1,13 @@
-const clientId = "de1de52b2fd042fb99fa1d5eed3a308a"; // Replace with your client ID
+const clientId = "de1de52b2fd042fb99fa1d5eed3a308a";
 const params = new URLSearchParams(window.location.search);
 const code = params.get("code");
 
 if (!code) {
     redirectToAuthCodeFlow(clientId);
 } else {
-    const topTracks = await getTopTracks();
-  
-    console.log(
-      topTracks?.map(
-        ({name, artists}) =>
-          `${name} by ${artists.map(artist => artist.name).join(', ')}`
-      )
-    );
-
+    const accessToken = "BQBFUUqCxn2SOSHH5aJ6o8tyQ0ioa-2bicE1qTCZmpeqNYetlr54XdlltMbzAuR2lbeUTla32OLzp2ZvQ5tC9TLWXfV9oQOV54QOmJV-ecaXxvt1f93GmsCl3CpBCbKnPqP6FBcxF3R9sZ7slK-sHwug8f-VIfaAli4k5JBw1lY_ZBCxgdlYo-gQTwOR1D1u8LdrTfD-AEISrLpRIkAR_ZJiDV7O7FJLBbKLYtpicPGIRN5UZPz5TXl2eWCtS4a-"
+    const profile = await fetchProfile(accessToken);
+    populateUI(profile);
 }
 
 export async function redirectToAuthCodeFlow(clientId) {
@@ -92,6 +86,45 @@ async function fetchWebApi(endpoint, method, body) {
     )).items;
   }
 
+  async function fetchProfile(token) {
+    const result = await fetch("https://api.spotify.com/v1/me", {
+        method: "GET", headers: { Authorization: `Bearer ${token}` }
+    });
+
+    return await result.json();
+
+    
+}
+
+function populateUI(profile) {
+    if (profile) {
+        document.getElementById("displayName").innerText = profile.display_name;
+
+        // Check if images array is not empty and contains at least one image
+        if (profile.images && profile.images.length > 0) {
+            const profileImage = new Image(200, 200);
+            profileImage.src = profile.images[0].url;
+            document.getElementById("avatar").appendChild(profileImage);
+            document.getElementById("imgUrl").innerText = profile.images[0].url;
+        } else {
+        console.log("User doesn't have a profile photo.");
+        }
+        document.getElementById("id").innerText = profile.id;
+        document.getElementById("email").innerText = profile.email;
+        document.getElementById("uri").innerText = profile.uri;
+        document.getElementById("uri").setAttribute("href", profile.external_urls.spotify);
+        document.getElementById("url").innerText = profile.href;
+        document.getElementById("url").setAttribute("href", profile.href);
+        
+    } else {
+        console.error("Profile data is undefined.");
+    }
+
+
+
+    
+    
+}
  
   // Authorization token that must have been created previously. See : https://developer.spotify.com/documentation/web-api/concepts/authorization
   /*
