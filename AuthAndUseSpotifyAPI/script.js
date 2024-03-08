@@ -220,7 +220,7 @@ function handlePlaylists()
     else if ( this.status == 401 ){
         refreshAccessToken();
     }
-    else {
+    else { 
         console.log(this.responseText);
         alert(this.responseText);
     }
