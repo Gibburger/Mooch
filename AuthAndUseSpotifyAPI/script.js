@@ -294,5 +294,5 @@ function handleDevices()
 
 function pauseSong()
 {
-    callApi("PUT", PAUSE + null, handleDevices);
+    callApi("PUT", PAUSE + "?device_id=", null, handleDevices);
 };
