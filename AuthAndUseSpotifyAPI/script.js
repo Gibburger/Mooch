@@ -8,18 +8,23 @@ var refresh_token = null;
 
 var PlayerId = null;
 
+const PERMISSIONS = "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private user-top-read";
+
 const AUTHORIZE = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token";
 const GETTOPSONGS = "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=5"
 const PLAYLISTS = "https://api.spotify.com/v1/me/playlists";
 const PLAYSONG  = "https://api.spotify.com/v1/me/player/play";
 const GETCURRENTPLAYER = "https://api.spotify.com/v1/me/player";
+const GETDEVICES = "https://api.spotify.com/v1/me/player/devices"
 
 function onPageLoad() //determians if user has been rederected or not on startup
 {
     //everytime page loads must retrieve the client id and client secret just cuz
     client_id = localStorage.getItem("client_id");
-    client_secret = localStorage.getItem("client_secret")
+    client_secret = localStorage.getItem("client_secret");
+    PlayerId = localStorage.getItem("PlayerId");
+
 
     if(window.location.search.length > 0) // if we did get the autho code already
     {
@@ -117,7 +122,7 @@ function requestAuthorization()
     url += "&response_type=code"; 
     url += "&redirect_uri=" + encodeURI(redirect_uri) //redirect uri
     url += "&show_dialog=true"; //optional, will always display spotify dialog, so does not save the authication for dev purposes, set to false for final release
-    url += "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private user-top-read";
+    url += PERMISSIONS;
     //^scope of permisions that we are asking for, can be longer or shorter depending on what permissions are needed
     /*
     url is asking for the following permissions
@@ -139,9 +144,9 @@ function getTopSongs()
     callApi("GET", GETTOPSONGS, null, handleTopSongs);
 }
 
-function getPlaylists()
+function GetRandomSongFromPlaylists()
 {
-    callApi("GET", PLAYLISTS, null, handlePlaylists);
+    callApi("GET", PLAYLISTS, null, HandleRandomSongFromPlaylists);
 }
 
 function callApi(method, url, body, callback)
@@ -167,6 +172,8 @@ function handlePlayer()
         if(data.device && data.device.id)
         {
             console.log(data.device.name + " id is: " + data.device.id);
+            PlayerId = data.device.id;
+            localStorage.setItem("PlayerId", PlayerId);
 
         }    
     }
@@ -181,8 +188,9 @@ function handlePlayer()
 
 function play(playlistId, songInPlaylist){
     let playlist_id = playlistId;
-    let trackindex = songInPlaylist
-    let album = document.getElementById("album").value;
+    let trackindex = songInPlaylist;
+    GetCurrentPlayer();
+    let album = "";
     let body = {};
     if ( album.length > 0 ){
         body.context_uri = album;
@@ -191,9 +199,9 @@ function play(playlistId, songInPlaylist){
         body.context_uri = "spotify:playlist:" + playlist_id;
     }
     body.offset = {};
-    body.offset.position = trackindex.length > 0 ? Number(trackindex) : 0;
+    body.offset.position = trackindex//.length > 0 ? Number(trackindex) : 0;
     body.offset.position_ms = 0;
-    callApi( "PUT", PLAY + "?device_id=" + deviceId(), JSON.stringify(body), handleApiResponse );
+    callApi( "PUT", PLAYSONG + "?device_id=" + PlayerId, JSON.stringify(body), handleApiResponse );
 }
 
 function getRandomInt(min, max) {
@@ -202,19 +210,17 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   }
 
-function handlePlaylists()
+function HandleRandomSongFromPlaylists()
 {
     if ( this.status == 200 ){
         var data = JSON.parse(this.responseText);
         console.log(data);
-        //data.items.forEach(item => console.log(item.name + " the playlist id: " + item.id));
         const playListNumber = getRandomInt(0,data.items.length)
         console.log(data.items[playListNumber].name + " " + data.items[playListNumber].tracks.total);
         const playlistLength = data.items[playListNumber].tracks.total;
         const playlistId = data.items[playListNumber].id;
         const songNumber = getRandomInt(0,playlistLength);
-        //const album = data.items[playListNumber].tracks.items.track.album[songNumber];
-        //console.log(album);
+        play(playlistId, songNumber);
 
     }
     else if ( this.status == 401 ){
@@ -233,6 +239,48 @@ function handleTopSongs()
         console.log(data);
         data.items.forEach(item => console.log("Song=" + item.name));
         
+    }
+    else if ( this.status == 401 ){
+        refreshAccessToken();
+    }
+    else {
+        console.log(this.responseText);
+        alert(this.responseText);
+    }
+}
+
+function testPlayer()
+{
+    console.log(PlayerId);
+}
+
+function handleApiResponse(){
+    if ( this.status == 200){
+        console.log(this.responseText);
+    }
+    else if ( this.status == 204 ){
+        //setTimeout(currentlyPlaying, 2000);
+    }
+    else if ( this.status == 401 ){
+        refreshAccessToken()
+    }
+    else {
+        console.log(this.responseText);
+        alert(this.responseText);
+    }    
+}
+
+function GetDevices()
+{
+    callApi("GET", GETDEVICES, null, handleDevices)
+}
+
+function handleDevices()
+{
+    if ( this.status == 200 ){
+        var data = JSON.parse(this.responseText);
+        data.devices.forEach(item => console.log("Device " + item.name + " is active: " + item.is_active));
+        console.log(data);
     }
     else if ( this.status == 401 ){
         refreshAccessToken();
