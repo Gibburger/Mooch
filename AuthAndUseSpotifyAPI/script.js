@@ -294,5 +294,5 @@ function handleDevices()
 
 function pauseSong()
 {
-    callApi("PUT", PAUSE + "?device_id=" + PlayerId, JSON.stringify(body), handleApiResponse);
+    callApi("PUT", PAUSE + null, handleDevices);
 }
