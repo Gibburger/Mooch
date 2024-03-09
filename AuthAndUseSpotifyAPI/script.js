@@ -295,4 +295,4 @@ function handleDevices()
 function pauseSong()
 {
     callApi("PUT", PAUSE + null, handleDevices);
-}
+};
