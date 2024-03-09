@@ -16,8 +16,8 @@ const GETTOPSONGS = "https://api.spotify.com/v1/me/top/tracks?time_range=long_te
 const PLAYLISTS = "https://api.spotify.com/v1/me/playlists";
 const PLAYSONG  = "https://api.spotify.com/v1/me/player/play";
 const GETCURRENTPLAYER = "https://api.spotify.com/v1/me/player";
-const GETDEVICES = "https://api.spotify.com/v1/me/player/devices"
-const PAUSE = 
+const GETDEVICES = "https://api.spotify.com/v1/me/player/devices";
+const PAUSE = 'https://api.spotify.com/v1/me/player/pause';
 
 function onPageLoad() //determians if user has been rederected or not on startup
 {
@@ -294,5 +294,5 @@ function handleDevices()
 
 function pauseSong()
 {
-    callApi("PUT", PAUSE)
+    callApi("PUT", PAUSE + "?device_id=" + PlayerId, JSON.stringify(body), handleApiResponse);
 }
