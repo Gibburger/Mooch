@@ -1,6 +1,9 @@
 client id:de1de52b2fd042fb99fa1d5eed3a308a
 client sececrit: f75bbd9b47144e11a021609291bebce7
 
+video for spotify api: https://www.youtube.com/watch?v=1vR3m0HupGI
+
+
 Front End
   React Native
   Java Script
