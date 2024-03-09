@@ -7,6 +7,7 @@ var access_token = null;
 var refresh_token = null;
 
 var PlayerId = null;
+var devices = [];
 
 const PERMISSIONS = "&scope=user-read-private user-read-email user-modify-playback-state user-read-playback-position user-library-read streaming user-read-playback-state user-read-recently-played playlist-read-private user-top-read";
 
@@ -190,7 +191,7 @@ function handlePlayer()
 function play(playlistId, songInPlaylist){
     let playlist_id = playlistId;
     let trackindex = songInPlaylist;
-    GetCurrentPlayer();
+    //GetCurrentPlayer();
     let album = "";
     let body = {};
     if ( album.length > 0 ){
@@ -221,6 +222,7 @@ function HandleRandomSongFromPlaylists()
         const playlistLength = data.items[playListNumber].tracks.total;
         const playlistId = data.items[playListNumber].id;
         const songNumber = getRandomInt(0,playlistLength);
+        GetSelectedDevice();
         play(playlistId, songNumber);
 
     }
@@ -271,17 +273,40 @@ function handleApiResponse(){
     }    
 }
 
+function GetSelectedDevice()
+{
+    var selectElement = document.getElementById("deviceSelector");
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+  
+    if (selectedOption.selected) {
+        PlayerId = selectedOption.value;
+        localStorage.setItem("PlayerId", PlayerId);
+    } else {
+        alert("No option selected");
+    }
+}
+
 function GetDevices()
 {
-    callApi("GET", GETDEVICES, null, handleDevices)
+    removeAllItems("deviceSelector");
+    devices.length = 0;
+    callApi("GET", GETDEVICES, null, handleDevices);
 }
 
 function handleDevices()
 {
     if ( this.status == 200 ){
-        var data = JSON.parse(this.responseText);
-        data.devices.forEach(item => console.log("Device " + item.name + " is active: " + item.is_active));
-        console.log(data);
+        let data = JSON.parse(this.responseText);
+        data.devices.forEach(item => devices.push({name:item.name, id:item.id, isCurrentlyPlaying:item.is_active}));
+        devices.forEach(i => console.log(i.name + " id is: " + i.id + " and it is currently active: " + i.isCurrentlyPlaying));
+        var selectElement = document.getElementById("deviceSelector");
+
+        devices.forEach(element => {
+            var option = document.createElement("option");
+            option.value = element.id;
+            option.text = element.name;
+            selectElement.add(option);
+        });
     }
     else if ( this.status == 401 ){
         refreshAccessToken();
@@ -295,5 +320,24 @@ function handleDevices()
 function pauseSong()
 {
     GetCurrentPlayer();
-    callApi("PUT", PAUSE + "?device_id=" + PlayerId, null, handleDevices);
+    callApi("PUT", PAUSE + "?device_id=" + PlayerId, null, handleApiNON);
 };
+
+function handleApiNON()
+{
+    if ( this.status == 401 ){
+        refreshAccessToken();
+    }
+    else {
+        console.log(this.responseText);
+        alert(this.responseText);
+    }
+}
+
+function removeAllItems( elementId ){
+    let node = document.getElementById(elementId);
+    while (node.firstChild) {
+        node.removeChild(node.firstChild);
+    }
+    console.log("DONE CLEARING OPTIONS");
+}
