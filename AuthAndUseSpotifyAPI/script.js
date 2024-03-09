@@ -17,6 +17,7 @@ const PLAYLISTS = "https://api.spotify.com/v1/me/playlists";
 const PLAYSONG  = "https://api.spotify.com/v1/me/player/play";
 const GETCURRENTPLAYER = "https://api.spotify.com/v1/me/player";
 const GETDEVICES = "https://api.spotify.com/v1/me/player/devices"
+const PAUSE = 
 
 function onPageLoad() //determians if user has been rederected or not on startup
 {
@@ -291,3 +292,7 @@ function handleDevices()
     }
 }
 
+function pauseSong()
+{
+    callApi("PUT", PAUSE)
+}
