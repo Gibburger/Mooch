@@ -12,7 +12,7 @@ const PERMISSIONS = "&scope=user-read-private user-read-email user-modify-playba
 
 const AUTHORIZE = "https://accounts.spotify.com/authorize";
 const TOKEN = "https://accounts.spotify.com/api/token";
-const GETTOPSONGS = "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=5"
+const GETTOPSONGS = "https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=20"
 const PLAYLISTS = "https://api.spotify.com/v1/me/playlists";
 const PLAYSONG  = "https://api.spotify.com/v1/me/player/play";
 const GETCURRENTPLAYER = "https://api.spotify.com/v1/me/player";
