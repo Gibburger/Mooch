@@ -10,3 +10,22 @@ hr{
 #top-icon{
     margin-right: 10px;
 }
+.footer-container {
+    background-color: antiquewhite;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    
+  }
+
+  .footer-row {
+    margin: 0;
+  }
+
+  .footer-col {
+    margin: 0;
+  }
+
+  .nav-link {
+    /* Add any additional styling for the links if needed */
+  }
