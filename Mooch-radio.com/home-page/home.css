@@ -1,3 +1,9 @@
+body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 #logo{
     border-radius: 5%;
 }
@@ -10,12 +16,8 @@ hr{
 #top-icon{
     margin-right: 10px;
 }
-.footer-container {
-    background-color: antiquewhite;
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    
+.footer {
+  background-color: antiquewhite;
   }
 
   .footer-row {
@@ -24,8 +26,4 @@ hr{
 
   .footer-col {
     margin: 0;
-  }
-
-  .nav-link {
-    /* Add any additional styling for the links if needed */
   }
