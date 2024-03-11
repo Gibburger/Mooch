@@ -19,6 +19,7 @@ const PLAYSONG  = "https://api.spotify.com/v1/me/player/play";
 const GETCURRENTPLAYER = "https://api.spotify.com/v1/me/player";
 const GETDEVICES = "https://api.spotify.com/v1/me/player/devices";
 const PAUSE = 'https://api.spotify.com/v1/me/player/pause';
+const SEARCH = "https://api.spotify.com/v1/search"
 
 function onPageLoad() //determians if user has been rederected or not on startup
 {
@@ -340,4 +341,9 @@ function removeAllItems( elementId ){
         node.removeChild(node.firstChild);
     }
     console.log("DONE CLEARING OPTIONS");
+}
+
+function getSong()
+{
+   // callApi("GET", SEARCH + "")
 }
