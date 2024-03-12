@@ -1,7 +1,8 @@
 html, body{
+    height: 100%;
     margin: 0;
     padding: 0;
-    height: calc();
+    min-height: calc(100vh - 60px);
 }
 
 #logo{
@@ -16,3 +17,4 @@ hr{
 #top-icon{
     margin-right: 10px;
 }
+
